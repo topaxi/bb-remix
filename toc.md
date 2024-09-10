@@ -69,10 +69,11 @@
   provided solutions and opt-in of additional addons like `react-query` or
   hand-written solutions.
 - Remix-I18next plugin not well integrated and does not provide much benefits
+- No "parallel-routes" like Next.js or Angular
 
 ### The Ugly
 
 - WAF having trouble integrating a modern stack like Remix
   - Streaming responses not supported
-  - Preloading via HTML link elements not supported
+  - Preloading routes not possible (due to preloading via HTML link elements not supported)
   - Hacky workarounds needed for session timeout handling
