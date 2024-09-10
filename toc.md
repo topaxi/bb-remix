@@ -21,15 +21,20 @@
 
 - TypeScript support
 
+TODO: Add example code here, non-ebill and one ebill example
+
 #### Forms and Fetchers
 
 - Handles concurrency for you
+
+TODO: Add example code here, non-ebill and one ebill example
 
 ## How is this different from Next.js?
 
 - SPA Mode
 - (No) Static Site Generation
 - Much easier self-hosting
+- Smaller API footprint
 - Just a vite plugin
 - Common patterns supported out of the box
   - Navigation Blocker
@@ -47,6 +52,7 @@
 - Action/Form validation with zod
 - Error tracking with Sentry
 - Internationalization with i18next
+- OpenAPI Service Contracts for typed communication with backend APIs
 - K8s/OpenShift deployment via Dockerfile and Helm
 
 ### The Great
@@ -54,6 +60,10 @@
 - Clear and easy to understand data flow
 - Form centric API simplifies a lot and keeps complex state away
 - Helper functions to setup routing in unit/component tests
+
+#### Routed Test Example
+
+TODO: Add example code here
 
 ### The Good
 
@@ -77,3 +87,15 @@
   - Streaming responses not supported
   - Preloading routes not possible (due to preloading via HTML link elements not supported)
   - Hacky workarounds needed for session timeout handling
+
+## Conclusion
+
+- Remix is a great framework and I'm looking forward to see what the future brings
+- Given the low complexity of the project, I'm not sure I'd pick a complex
+  frontend framework
+
+## Questions?
+
+## Thank You!
+
+- Ä guetä :)
