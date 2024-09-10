@@ -1,6 +1,14 @@
 # Agenda
 
+- Introduction
+- What is Remix?
+- How did it fare in eBill in the past 6 months?
+- Questions
+
 ## Hi, it's me, I'm the problem, it's me.
+
+- ...
+- Please ask questions right away or at the end of the presentation :)
 
 ## What is Remix?
 
