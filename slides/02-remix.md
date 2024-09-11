@@ -146,10 +146,6 @@ export default function RouteComponent() {
 
 ---
 
-TODO: Add code example of explicit routes
-
----
-
 ### Data-Flow
 
 TODO: Add diagram like here: https://remix.run/docs/en/main/discussion/data-flow
