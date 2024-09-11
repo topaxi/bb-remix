@@ -26,18 +26,69 @@
 
 ---
 
+#### Route File Structure Example
+
+Flat Routes is the default
+
+```txt [1|2|3|4-6]
+app/root.tsx
+app/routes/_index.tsx
+app/routes/about.tsx
+app/routes/blog.tsx
+app/routes/blog._index.tsx
+app/routes/blog.$slug.tsx
+```
+
+---
+
+#### Route File Structure Example
+
+Optionally, one can treat a route as a module, with a mandatory `route.tsx` file.
+
+```txt [3-5]
+app/routes/blog.tsx
+app/routes/blog._index.tsx
+app/routes/blog.$slug/route.tsx
+app/routes/blog.$slug/components/...
+app/routes/blog.$slug/utils/...
+```
+
+Further nesting for routes is **not** possible though.
+
+---
+
+#### Route Configuration
+
+```typescript [4-19]
+import { vitePlugin as remix } from "@remix-run/dev";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  plugins: [
+    remix({
+      routes(defineRoutes) {
+        return defineRoutes((route) => {
+          route("/", "app/home/route.tsx", { index: true });
+          route("about", "app/about/route.tsx");
+          route("blog", "app/blog/route.tsx", () => {
+            route("", "app/blog/index/route.tsx", { index: true });
+            route(":slug", "app/blog/post/route.tsx");
+          });
+        });
+      },
+    }),
+  ],
+});
+```
+
+---
+
 #### Route
 
 - A route is a combination of
   - A loader (optional)
   - An action (optional)
   - A component (optional)
-
----
-
-### Route File Structure Example
-
-TODO: Add example of route file structure and their paths
 
 ---
 
@@ -59,7 +110,9 @@ export default function RouteComponent() {
 
 #### Action Example
 
-```typescript [1-13|15-29]
+```typescript [3-15|17-31]
+import { Form, useActionData } from '@remix-run/react'
+
 export function action({ request, params, context }) {
   let requestBody = await request.json()
   let validation = FormSchema.safeParse(requestBody)
