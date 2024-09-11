@@ -138,7 +138,7 @@ export default function RouteComponent() {
 import { Form, useActionData } from '@remix-run/react'
 
 export async function action({ request, params, context }) {
-  let requestBody = await request.json()
+  let requestBody = await request.formData()
   let validation = FormSchema.safeParse(requestBody)
 
   if (!validation.valid) {
