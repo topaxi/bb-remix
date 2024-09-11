@@ -2,6 +2,13 @@
 
 ---
 
+### What is Remix?
+
+- Remix is a modern React framework
+- Focused on web standards
+
+---
+
 ### Main Concepts
 
 - Routes
@@ -12,8 +19,10 @@
 ### Routes
 
 - Convention based directory structure by default
-- Only one level deep, with potential subfolder for route only code
+  - Only one level deep, with potential subfolder for route only code
 - Routes can also be configured explicitly in code
+- Nested routes are supported and load in parallel
+  - No spinners ;)
 
 ---
 
@@ -26,9 +35,61 @@
 
 ---
 
-#### Examples
+### Route File Structure Example
 
-TODO: Add file based routing example
+TODO: Add example of route file structure and their paths
+
+---
+
+#### Loader Example
+
+```typescript [1-3|5-9]
+export function loader({ request, params, context }) {
+  return json({ status: "success", data: [] } as const)
+}
+
+export default function RouteComponent() {
+  const { status, data } = useLoaderData<typeof loader>()
+
+  return <div>{status}: {data.length}</div>
+}
+```
+
+---
+
+#### Action Example
+
+```typescript [1-13|15-29]
+export function action({ request, params, context }) {
+  let requestBody = await request.json()
+  let validation = FormSchema.safeParse(requestBody)
+
+  if (!validation.valid) {
+    return json({
+      status: "error",
+      issues: validation.error.issues
+    } as const)
+  }
+
+  return json({ status: "success" } as const)
+}
+
+export default function RouteComponent() {
+  const actionData = useActionData<typeof action>()
+
+  return (
+    <Form method="post">
+      {actionData?.status === 'success'
+        && <p className="text-green">Success!</p>}
+      <input name="username" />
+      {actionData?.status === 'error' &&
+        <p className="text-red empty:hidden">
+          {actionData.issues.username}
+        </p>}
+    </Form>
+  )
+}
+```
 
 ---
 
@@ -65,3 +126,7 @@ TODO: Add example code here, non-ebill and one ebill example
 ---
 
 TODO: Add example code here, non-ebill and one ebill example
+
+```
+
+```

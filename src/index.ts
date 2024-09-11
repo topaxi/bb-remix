@@ -1,5 +1,6 @@
 import Reveal from 'reveal.js';
 import Markdown from 'reveal.js/plugin/markdown/markdown.esm.js';
+import Highlight from 'reveal.js/plugin/highlight/highlight.esm.js';
 
 const markdownFiles: Record<string, { default: string }> = import.meta.glob('../slides/*.md', {
   query: 'raw',
@@ -36,7 +37,7 @@ function initializeReveal() {
   document.body.prepend(revealRoot);
 
   let deck = new Reveal({
-    plugins: [Markdown],
+    plugins: [Markdown, Highlight],
   });
 
   deck.initialize();

@@ -15,5 +15,8 @@ by Damian Senn
 
 ## Introduction
 
-- ...
+- Started in February this year
+- Frontend Engineer
+- Currently working on eBill
+- Pet Dad of a dog and two cats
 - Please ask questions right away or at the end of the presentation :)
