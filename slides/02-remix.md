@@ -43,7 +43,7 @@ app/routes/blog.$slug.tsx
 
 #### Route File Structure Example
 
-Optionally, one can treat a route as a module, with a mandatory `route.tsx` file.
+Optionally, one can treat a route as a module folder, with a mandatory `route.tsx` file.
 
 ```txt [3-5]
 app/routes/blog.tsx
@@ -57,7 +57,7 @@ Further nesting for routes is **not** possible though.
 
 ---
 
-#### Route Configuration
+#### Route Configuration in Code Example
 
 ```typescript [4-19]
 import { vitePlugin as remix } from "@remix-run/dev";
@@ -83,7 +83,7 @@ export default defineConfig({
 
 ---
 
-#### Route
+#### What is a Route anyway?
 
 - A route is a combination of
   - A loader (optional)
@@ -92,10 +92,34 @@ export default defineConfig({
 
 ---
 
+### Data-Flow
+
+![Remix Data-Flow](../assets/remix-dataflow.png)
+
+---
+
+#### Loaders and Actions
+
+- TypeScript support
+- Single place to interact with services or databases
+- Clear separation between presentation and interaction
+
+---
+
+#### Forms and Fetchers
+
+- Handles concurrency for you
+- By default, forms are a thin abstraction over fetchers
+- Fetchers provide more fine grained control
+  - Adding headers
+  - Calling different endpoints
+
+---
+
 #### Loader Example
 
 ```typescript [1-3|5-9]
-export function loader({ request, params, context }) {
+export async function loader({ request, params, context }) {
   return json({ status: "success", data: [] } as const)
 }
 
@@ -113,7 +137,7 @@ export default function RouteComponent() {
 ```typescript [3-15|17-31]
 import { Form, useActionData } from '@remix-run/react'
 
-export function action({ request, params, context }) {
+export async function action({ request, params, context }) {
   let requestBody = await request.json()
   let validation = FormSchema.safeParse(requestBody)
 
@@ -146,36 +170,4 @@ export default function RouteComponent() {
 
 ---
 
-### Data-Flow
-
-TODO: Add diagram like here: https://remix.run/docs/en/main/discussion/data-flow
-
----
-
-#### Loaders and Actions
-
-- TypeScript support
-- Single place to interact with services or databases
-- Clear separation between GET and POST (TODO: reword this)
-
----
-
-TODO: Add example code here, non-ebill and one ebill example
-
----
-
-#### Forms and Fetchers
-
-- Handles concurrency for you
-- By default, forms are a thin abstraction over fetchers
-- Fetchers provide more fine grained control
-  - Adding headers
-  - Calling different endpoints
-
----
-
-TODO: Add example code here, non-ebill and one ebill example
-
-```
-
-```
+TODO: Potentially add eBill-Web examples too?
