@@ -1,0 +1,21 @@
+{
+  "name": "bb-remix",
+  "version": "1.0.0",
+  "description": "Remix Brown Bag",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "author": "Damian Senn <damian.senn@ti8m.ch>",
+  "license": "ISC",
+  "dependencies": {
+    "reveal.js": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/reveal.js": "^5.0.3",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.4"
+  }
+}
