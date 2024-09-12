@@ -1,3 +1,3 @@
 ## Questions?
 
-- Feel free to also reach out directly to me via Teams :)
+- Feel free to reach out directly via Teams :)
