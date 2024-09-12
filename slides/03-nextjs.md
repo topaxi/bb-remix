@@ -10,6 +10,8 @@
 - (No) Static Site Generation
 - No server components (yet!)
 - Much easier self-hosting
+  - Integrates with existing JavaScript servers
+  - Express, Deno, Cloudflare, etc.
 - Bundling is just a vite plugin
 
 ---
