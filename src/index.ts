@@ -25,7 +25,7 @@ function initializeReveal() {
     let markdown = document.createElement('script');
     markdown.type = 'text/template';
     markdown.dataset.template = '';
-    markdown.textContent = content;
+    markdown.textContent = replaceBaseUrlMarkdown(content);
     section.append(markdown);
 
     let wrapper = document.createElement('section');
@@ -41,6 +41,10 @@ function initializeReveal() {
   });
 
   deck.initialize();
+}
+
+function replaceBaseUrlMarkdown(content: string) {
+  return content.replace(/\]\(\//g, `](${import.meta.env.BASE_URL}`);
 }
 
 main();
