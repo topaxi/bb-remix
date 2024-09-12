@@ -14,9 +14,9 @@
 
 ## Common patterns out of the box
 
-- Navigation Blocker
 - Fetching data, handling concurrency
 - Form Integration
+- Navigation Blocker
 
 ---
 

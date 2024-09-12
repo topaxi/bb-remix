@@ -95,7 +95,7 @@ export default defineConfig({
 
 ### Data-Flow
 
-![Remix Data-Flow](../assets/remix-dataflow.png)
+![Remix Data-Flow](/assets/remix-dataflow.png)
 
 ---
 

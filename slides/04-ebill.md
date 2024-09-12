@@ -4,7 +4,7 @@
 
 #### eBill Web
 
-![eBill Web Screenshot](../assets/ebill-web-dashboard.png)
+![eBill Web Screenshot](/assets/ebill-web-dashboard.png)
 
 ---
 
