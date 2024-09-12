@@ -19,6 +19,7 @@
 - Fetching data, handling concurrency
 - Form Integration
 - Navigation Blocker
+  - via `useBeforeUnload` and `useBlocker`
 
 ---
 
