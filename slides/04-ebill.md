@@ -1,4 +1,4 @@
-## eBill Web
+# eBill Web
 
 ---
 
@@ -26,6 +26,7 @@
 
 - Clear and easy to understand data flow
 - Form centric API simplifies a lot and keeps complex state away
+- Schemas validation with zod and discriminants define possible UI states
 - Helper functions to setup routing in unit/component tests
 
 ---
@@ -46,11 +47,13 @@ For our more complex workflows and dialogs we use a server driven view state.
 
 #### Server Driven View State
 
-```json
+```json [1-2|3|4-6]
 { view: 'form', status: 'success'}
 { view: 'form', status: 'validation', errors: [...] }
 { view: 'progress', status: 'success', data: [...] }
-{ view: 'confirmation', status: 'success'}
+{ view: 'confirmation', status: 'pending' }
+{ view: 'confirmation', status: 'success' }
+{ view: 'confirmation', status: 'error' }
 ```
 
 ---
@@ -76,7 +79,7 @@ export async function action({ request, context }) {
 
       return json({
         view: 'progress',
-        status: 'success',
+        status: 'pending',
         data: response.data,
       } as const)
     case 'progress':
@@ -145,6 +148,7 @@ test('render app with routes', async () => {
 ### The Good
 
 - Less magic and more control over the app than for example with Next.js
+- Easy to opt-out of Remix provided features and do your own thing
 
 ---
 
@@ -153,6 +157,8 @@ test('render app with routes', async () => {
 - Starter came with a lot of unnecessary things
 - Remix plugins and dependency management makes upgrades harder
   - Removed custom routing module
+    - Recommendation: Use configuration based or the default directory
+      structure
   - Explicitly overwritten several dependency versions
 
 ---
@@ -163,6 +169,8 @@ test('render app with routes', async () => {
   provided solutions and opt-in of additional addons like `react-query` or
   hand-written solutions.
 - Remix-I18next plugin not well integrated and does not provide much benefits
+  - Causing hydration errors out of the box
+  - Mostly handrolled solution for now
 - No "parallel-routes" like Next.js or Angular
 
 ---

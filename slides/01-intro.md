@@ -13,7 +13,7 @@ by Damian Senn
 
 ---
 
-## Introduction
+## Who am I?
 
 - Started in February this year
 - Frontend Engineer

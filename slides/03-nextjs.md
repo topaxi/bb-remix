@@ -1,5 +1,7 @@
 ## How is this different from Next.js?
 
+<small>(Warning: Personal opinions ahead...)</small>
+
 ---
 
 ## Going to production

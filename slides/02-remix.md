@@ -1,4 +1,4 @@
-## What is Remix?
+# What is Remix?
 
 ---
 
@@ -30,13 +30,14 @@
 
 Flat Routes is the default
 
-```txt [1|2|3|4-6]
+```txt [1|2|3|4-6|7]
 app/root.tsx
 app/routes/_index.tsx
 app/routes/about.tsx
 app/routes/blog.tsx
 app/routes/blog._index.tsx
 app/routes/blog.$slug.tsx
+app/routes/$.tsx
 ```
 
 ---
@@ -74,6 +75,7 @@ export default defineConfig({
             route("", "app/blog/index/route.tsx", { index: true });
             route(":slug", "app/blog/post/route.tsx");
           });
+          route(":notfound", "app/error/notfound.route.tsx");
         });
       },
     }),
