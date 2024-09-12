@@ -59,7 +59,7 @@ Further nesting for routes is **not** possible though.
 
 #### Route Configuration in Code Example
 
-```typescript [4-19]
+```typescript [1-19|7-16]
 import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 
@@ -85,7 +85,8 @@ export default defineConfig({
 
 #### What is a Route anyway?
 
-- A route is a combination of
+- is an URL path
+- and a combination with at least one of
   - A loader (optional)
   - An action (optional)
   - A component (optional)
@@ -101,7 +102,7 @@ export default defineConfig({
 #### Loaders and Actions
 
 - TypeScript support
-- Single place to interact with services or databases
+- Defined place to interact with services or databases
 - Clear separation between presentation and interaction
 
 ---
@@ -152,16 +153,16 @@ export async function action({ request, params, context }) {
 }
 
 export default function RouteComponent() {
-  const actionData = useActionData<typeof action>()
+  const data = useActionData<typeof action>()
 
   return (
     <Form method="post">
-      {actionData?.status === 'success'
+      {data?.status == 'success'
         && <p className="text-green">Success!</p>}
       <input name="username" />
-      {actionData?.status === 'error' &&
+      {data?.status == 'error' &&
         <p className="text-red empty:hidden">
-          {actionData.issues.username}
+          {data.issues.username}
         </p>}
     </Form>
   )
@@ -170,4 +171,35 @@ export default function RouteComponent() {
 
 ---
 
-TODO: Potentially add eBill-Web examples too?
+#### Fetcher Example
+
+```typescript [4-9|5|6|7|8|9|12-27|14,18|16|22-24]
+export async function action(...) { ... }
+
+export function MyForm() {
+  const {
+    Form,
+    data,
+    state, // 'idle' | 'loading' | 'submitting'
+    load, // triggers 'loading'
+    submit, // triggers 'submitting'
+  } = useFetcher<typeof action>()
+
+  return (
+    <Form method="post">
+      {state == 'idle' && data?.status == 'success'
+        && <p className="text-green">Success!</p>}
+      <fieldset disabled={state != 'idle'}>
+        <input name="username" />
+        {state == 'idle' && data?.status == 'error' &&
+          <p className="text-red empty:hidden">
+            {data.issues.username}
+          </p>}
+        <Button type="submit">
+          {state == 'submitting' ? 'Saving…' : 'Save'}
+        </Button>
+      </fieldset>
+    </Form>
+  )
+}
+```

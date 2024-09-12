@@ -24,9 +24,45 @@
 
 ---
 
+#### Server Driven View State
+
+TODO: Add example of how we drive our dialogs
+
+---
+
 #### Routed Test Example
 
-TODO: Add example code here
+```typescript [1|4-5|8-23|14-21|25-28]
+import { createRemixStub } from '@remix-run/testing'
+import { render } from '@testing-library/react'
+import { test } from 'vitest'
+import App, { loader as rootLoader } from '#app/root'
+import MyPage, { loader, action } from '#app/routes/my-page'
+
+test('render app with routes', async () => {
+  const App = createRemixStub([
+    {
+      id: 'root',
+      path: '/',
+      Component: App,
+      loader: rootLoader,
+      children: [
+        {
+          path: '/my-page',
+          Component: MyPage,
+          loader,
+          action,
+        },
+      ],
+    }
+  ])
+
+  render(<App />)
+
+  expect(await screen.findByText('MyPage Title'))
+    .toBeVisible()
+})
+```
 
 ---
 
@@ -52,6 +88,7 @@ TODO: Add example code here
 
 ### The Ugly
 
+- Error handling behaves different in development build
 - WAF having trouble integrating a modern stack like Remix
   - Streaming responses not supported
   - Preloading routes not possible (due to preloading via HTML link elements not supported)
