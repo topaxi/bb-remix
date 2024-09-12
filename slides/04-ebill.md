@@ -2,17 +2,23 @@
 
 ---
 
+#### eBill Web
+
+![eBill Web Screenshot](../assets/ebill-web-dashboard.png)
+
+---
+
 ### Setup
 
-- Epic Stack as a project starter
-- Database ORM with Prisma
-- Styling with Tailwind and shadcn/ui
-- Testing with Vitest and Testing Library
-- Action/Form validation with zod
-- Error tracking with Sentry
-- Internationalization with i18next
-- OpenAPI Service Contracts for typed communication with backend APIs
-- K8s/OpenShift deployment via Dockerfile and Helm
+- **Epic Stack** as a project starter
+- Database ORM with **Prisma**
+- Styling with **Tailwind** and **shadcn/ui**
+- Testing with **Vitest** and **Testing Library**
+- Action/Form validation with **zod**
+- Error tracking with **Sentry**
+- Internationalization with **i18next**
+- **OpenAPI** Service Contracts for typed communication with backend APIs
+- K8s/**OpenShift** deployment via Dockerfile and **Helm**
 
 ---
 
@@ -26,7 +32,77 @@
 
 #### Server Driven View State
 
-TODO: Add example of how we drive our dialogs
+For our more complex workflows and dialogs we use a server driven view state.
+
+---
+
+#### Server Driven View State
+
+- Server can drive view using enums or state machines
+  - Return JSON with a view and status field
+- Amazing to drive wizard like workflows
+
+---
+
+#### Server Driven View State
+
+```json
+{ view: 'form', status: 'success'}
+{ view: 'form', status: 'validation', errors: [...] }
+{ view: 'progress', status: 'success', data: [...] }
+{ view: 'confirmation', status: 'success'}
+```
+
+---
+
+#### Server Driven View State
+
+```typescript [29-44|30-31|35|36-42|1-5|6-21|17-21|22-23|24-25]
+export async function action({ request, context }) {
+  const { api } = context
+  const requestData = await request.formData()
+
+  switch (requestData.view) {
+    case 'form':
+      const response = await handleFormRequest(requestData)
+
+      if (!response.valid) {
+        return {
+          view: 'form',
+          status: 'validation',
+          errors: response.data,
+        }
+      }
+
+      return json({
+        view: 'progress',
+        status: 'success',
+        data: response.data,
+      } as const)
+    case 'progress':
+      return json({ view: 'confirmation', status: 'success' })
+    default:
+      throw new Response('Invalid view', { status: 400 })
+  }
+}
+
+export function DialogView() {
+  const { data } = useActionData<typeof action>()
+  const view = data?.view ?? 'form';
+
+  return (
+    <Form method="post">
+      <input type="hidden" name="view" value={view} />
+      {view == 'form' &&
+        <DialogForm actionData={data} />}
+      {view == 'progress' &&
+        <DialogFormProgress actionData={data} />}
+      {view == 'confirmation' &&
+        <DialogConfirmation actionData={data} />}
+    </Form>
+  )
+}
+```
 
 ---
 
@@ -74,10 +150,15 @@ test('render app with routes', async () => {
 
 ### The Bad
 
-- Starter comes with a lot of unnecessary things
+- Starter came with a lot of unnecessary things
 - Remix plugins and dependency management makes upgrades harder
   - Removed custom routing module
   - Explicitly overwritten several dependency versions
+
+---
+
+### The Bad
+
 - More complex state management and request handling requires opt-out of Remix
   provided solutions and opt-in of additional addons like `react-query` or
   hand-written solutions.
@@ -89,7 +170,8 @@ test('render app with routes', async () => {
 ### The Ugly
 
 - Error handling behaves different in development build
+  - Workaround by (almost) always responding with 2xx status
 - WAF having trouble integrating a modern stack like Remix
-  - Streaming responses not supported
+  - Streaming responses not supported (no Remix `defer`)
   - Preloading routes not possible (due to preloading via HTML link elements not supported)
   - Hacky workarounds needed for session timeout handling
