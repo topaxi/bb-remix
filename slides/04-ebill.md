@@ -147,6 +147,7 @@ test('render app with routes', async () => {
 
 ### The Good
 
+- Simple uncontrolled forms get you far
 - Less magic and more control over the app than for example with Next.js
 - Easy to opt-out of Remix provided features and do your own thing
 

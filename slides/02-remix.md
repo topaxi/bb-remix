@@ -175,7 +175,8 @@ export default function RouteComponent() {
 
 #### Fetcher Example
 
-```typescript [4-9|5|6|7|8|9|12-27|14,18|16|22-24]
+```typescript [5-10|6|7|8|1,9|2,10|13-28|15,19|17|23-25]
+export async function loader(...) { ... }
 export async function action(...) { ... }
 
 export function MyForm() {
